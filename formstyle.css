@@ -10,8 +10,8 @@
 /* ---------- ERIC MEYER'S RESET CSS ---------- */
 /* ---------- http://meyerweb.com/eric/tools/css/reset/ ---------- */
 
-@import url(http://meyerweb.com/eric/tools/css/reset/reset.css);
-
+/*@import url(http://meyerweb.com/eric/tools/css/reset/reset.css);
+*/
 /* ---------- FONTAWESOME ---------- */
 
 [class*="fontawesome-"]:before {
@@ -20,14 +20,13 @@
 
 /* ---------- GENERAL ---------- */
 
-body {
-	color: black;
+#login {
   font: 87.5%/1.5em 'Open Sans', sans-serif;
   margin: 0;
 }
 
 a {
-	color: #eee;
+	color: #AAA;
 	text-decoration: none;
 }
 
@@ -44,21 +43,11 @@ input {
 	-webkit-appearance: none;
 }
 
-p {
-	line-height: 1.5em;
-}
-
-.clearfix { *zoom: 1; } /* For IE 6/7 */
-.clearfix:before, .clearfix:after {
-	display: table;
-	content: "";
-}
-.clearfix:after { clear: both; }
 
 /* ---------- LOGIN ---------- */
 
 .titulo{
-	color:white;
+	color: #555;
 	text-align:center;
 	margin-top:20px;
 	margin-bottom:-20px;
@@ -71,9 +60,9 @@ p {
 }
 
 #login form span {
-	background-color: #363b41;
+	background-color: #888;
 	border-radius: 3px 0px 0px 3px;
-	color: #606468;
+	color: #000;
 	display: block;
 	float: left;
 	height: 50px;
@@ -87,7 +76,7 @@ p {
 }
 
 #login form input[type="text"], input[type="password"] {
-	background-color: #3b4148;
+	background-color: #CCC;
 	border-radius: 0px 3px 3px 0px;
 	color: #606468;
 	margin-bottom: 1em;
@@ -117,4 +106,26 @@ p {
 
 #login > p span {
 	padding-left: 5px;
+}
+
+#ver-minimalist
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	text-align: left;
+	border-collapse: collapse;
+}
+#ver-minimalist th
+{
+	padding: 2px 2px;
+	font-weight: normal;
+	font-size: 12px;
+	color: #039;
+}
+#ver-minimalist td
+{
+	padding: 5px 2px 0px 2px;
+	border-right: 30px solid #fff;
+	border-left: 30px solid #fff;
+	color: #669;
 }

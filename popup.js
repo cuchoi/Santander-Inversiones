@@ -102,8 +102,8 @@ console.log(automatico);
           var valoresHtml = "<h1>Fondos Mutuos</h1>"
 
           // Creamos el HTML de la tabla de FFMM
-          valoresHtml += "<br>"
-          valoresHtml += "<table><tr>";    
+          // valoresHtml += "<br>"
+          valoresHtml += "<table id='ver-minimalist'><tr>";    
          
           montoFondos.each(function(valor){
 
@@ -112,7 +112,7 @@ console.log(automatico);
 
             var monto = montoFondos[valor].innerHTML.trim();
             
-            valoresHtml += "<tr><td><a data-fondo='"+fondo+"' class='fondo' href='#'>"+fondo+"</a></td><td>"+monto+"</td></tr>"
+            valoresHtml += "<tr><td><a data-fondo='"+fondo+"' class='fondo' href='#'>"+fondo+"</a></td><td>$"+parseInt(monto).format(0,3,".")+"</td></tr>"
             
             if (typeof tablaInversiones[fondo] === 'undefined' ){
               tablaInversiones[fondo] = {};
@@ -124,7 +124,7 @@ console.log(automatico);
           valoresHtml += "</table>"
 
           // Agregar total
-          valoresHtml += "<br> Total: "+totalInversiones;
+          valoresHtml += "<br> Total: $"+totalInversiones;
     
           $('#content').html(valoresHtml);
 
@@ -150,9 +150,14 @@ console.log(automatico);
       montos.push(parseInt(tablaInversiones[fondo][dia]));
     }
 
-    if(dias.length === 1){
+    var largoDias = dias.length;
+    if(largoDias === 1){
+      montos.push(null);
+      montos.reverse();
+      montos.push(null);
       dias.push(" ");
-
+      dias.reverse();
+      dias.push(" ");
     }
 
 
@@ -172,24 +177,35 @@ console.log(automatico);
     var min = Math.min.apply(null, montos),
     max = Math.max.apply(null, montos);
 
+        if(largoDias === 1){
+          min = max;
+        }
+
+    min = min - 20000;
+
+    if(min < 0){
+      min = 0;
+    }
+
     var escalaGrafico = {
           scaleOverride : true,
           scaleSteps : 10,
           scaleStepWidth : 5000,
-          scaleStartValue : min-5000,
+          scaleStartValue : nearest(min,10000),
     }
 
-    if (max == min) {
-     escalaGrafico = {
-      scaleOverride : true,
-      scaleSteps : 3,
-      scaleStepWidth : 1,
-      scaleStartValue : max - 2
-    }
+    if(largoDias === 1){
+      console.log("ds");
+
+
+       new Chart(graficoFondo).MissingLine(dataFondos,escalaGrafico);
+
   }
 
-    new Chart(graficoFondo).Line(dataFondos,escalaGrafico);
 
+  else{
+    new Chart(graficoFondo).Line(dataFondos,escalaGrafico);
+}
 
   }
 };
@@ -203,8 +219,8 @@ document.addEventListener('DOMContentLoaded', function () {
   $('#boton').click({automatico: false}, santanderAPI.logIn);
 
   chrome.storage.sync.get(['rut','clave','ultimoDia','tablaInversiones'], function(valores){
-     document.getElementById('rut').value = valores['rut'];
-     document.getElementById('password').value = valores['clave'];
+     //document.getElementById('rut').value = valores['rut'];
+     //document.getElementById('password').value = valores['clave'];
 
      if(valores['rut'] && valores['clave']){
       Rut = valores['rut'];
@@ -266,5 +282,31 @@ function transformarAObjetoFecha(fecha){
   datosFecha = fecha.split("-");
   return new Date(datosFecha[0], datosFecha[1], datosFecha[2]);
 };
+
+/**
+ * Number.prototype.format(n, x, s, c)
+ * 
+ * @param integer n: length of decimal
+ * @param integer x: length of whole part
+ * @param mixed   s: sections delimiter
+ * @param mixed   c: decimal delimiter
+
+ 12345678.9.format(2, 3, '.', ',');  // "12.345.678,90"
+ 123456.789.format(4, 4, ' ', ':');  // "12 3456:7890"
+ 12345678.9.format(0, 3, '-');       // "12-345-679"
+
+ */
+Number.prototype.format = function(n, x, s, c) {
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+        num = this.toFixed(Math.max(0, ~~n));
+
+    return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+};
+
+function nearest(n, v) {
+  n = n / v;
+  n = (n < 0 ? Math.floor(n) : Math.ceil(n)) * v;
+  return n;
+}
 
 
