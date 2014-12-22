@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+     <link rel='stylesheet' href='formstyle.css' media='screen' type='text/css' />
+
+    <style>
+      body {
+        min-width: 300px;
+        overflow-x: hidden;
+      }
+
+      img {
+      }
+
+      #content{
+        width: 350px;
+      }
+    </style>
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+     -->
+    <script src="popup.js"></script>
+    <script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+    <script src="Chart.min.js"></script>
+
+
+  </head>
+  <body>
+
+<div id="content">
+<h1 class='titulo'>Santander Inversiones</h1>
+<div id='login' style='margin-bottom:-20px;'>
+<form action='' method='get'>
+<fieldset class='clearfix'>
+<p><span class='fontawesome-user'></span>
+<input type='text' id='rut' placeholder='Rut'>
+<p><span class='fontawesome-lock'></span>
+<input type='password' id='password' placeholder='****'></p> <p><input type='button' id='boton' value='Sign In'></p></fieldset></form></div>
+  </body>
+</html>
+
